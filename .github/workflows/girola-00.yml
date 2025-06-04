@@ -1,7 +1,7 @@
 #pippo: "tanto"
 #pippo:
 #- pluto
-#- 
+#-
 #pippo:
   #pluto: valore
   #paperino: 
@@ -24,3 +24,15 @@ jobs:
       - run: ls -la
       - run: pwd
       - run: env
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            dicianni
+      - run: ls -la
+      - uses: actions/setup-python@v5 # equivalente di venv
+        with:
+          python-version: '3.11.9'
+      - run: python --version
+      - run: python Smart_Farming_Crop_Yield_2024.csv 
+      - run: python Addestramento_ml.py
+        working-directory: girola
