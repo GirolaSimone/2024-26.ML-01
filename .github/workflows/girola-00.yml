@@ -42,12 +42,9 @@ jobs:
           echo "=== Environment Variables ==="
           env
       
-      # Checkout repository with sparse checkout
+      # Checkout repository (full checkout for data files)
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            girola
       
       - name: List files after checkout
         run: ls -la
