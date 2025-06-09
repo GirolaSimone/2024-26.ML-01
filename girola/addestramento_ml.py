@@ -2,7 +2,7 @@
 import pandas as pd
 
 # %%
-df = pd.read_csv(r"C:\Users\SimoneGirola\OneDrive - ITS Angelo Rizzoli\Desktop\UFS08\Smart_Farming_Crop_Yield_2024.csv")
+df = pd.read_csv("girola\Smart_Farming_Crop_Yield_2024.csv")
 
 # %%
 df
