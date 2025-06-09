@@ -8,37 +8,75 @@
     #-stellina: valore
 #presepe:
 
-name: Action di girola
+name: Action di Girola
+
 on:
-  push: 
-jobs: 
-  ciao: 
+  push:
+    branches: [ main, develop ]  # Specify which branches trigger the workflow
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  ciao:
     runs-on: ubuntu-latest
-    steps: 
-      - run: echo "Ciao, sono una stringa!"
-      - run: echo "Bubusettede!"
-      - run: python --version
-      - run: ifconfig
-      - run: pip --version
-      - run: lsb_release -d
-      - run: ls -la
-      - run: pwd
-      - run: env
-      - uses: actions/checkout@v4
+    
+    steps:
+      # Initial setup and system info
+      - name: Print greeting
+        run: echo "Ciao, sono una stringa!"
+      
+      - name: Print fun message
+        run: echo "Bubusettede!"
+      
+      - name: Check system information
+        run: |
+          echo "=== System Information ==="
+          python --version
+          pip --version
+          lsb_release -d
+          echo "=== Network Configuration ==="
+          ifconfig
+          echo "=== Current Directory ==="
+          pwd
+          ls -la
+          echo "=== Environment Variables ==="
+          env
+      
+      # Checkout repository with sparse checkout
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           sparse-checkout: |
             girola
-      - run: ls -la
-      - uses: actions/setup-python@v5 # equivalente di venv
+      
+      - name: List files after checkout
+        run: ls -la
+      
+      # Setup Python environment
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11.13'
-      - run: python --version
-      - run: pip install -r requirements.txt
+      
+      - name: Verify Python version
+        run: python --version
+      
+      # Install dependencies
+      - name: Install requirements
+        run: pip install -r requirements.txt
         working-directory: girola
-      - run: pip install joblib
-      - run: python addestramento_ml.py
+      
+      - name: Install additional dependencies
+        run: pip install joblib
+      
+      # Run the main script
+      - name: Run training script
+        run: python addestramento_ml.py
         working-directory: girola
-      - uses: actions/upload-artifact@v4
-        with: 
+      
+      # Upload artifacts
+      - name: Upload trained model
+        uses: actions/upload-artifact@v4
+        with:
           name: best_artifact
           path: girola/log_reg.joblib
