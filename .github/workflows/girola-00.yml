@@ -8,7 +8,7 @@
     #-stellina: valore
 #presepe:
 
-name: Action di Girola
+name: Action di girola
 
 on:
   push:
