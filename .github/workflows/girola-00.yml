@@ -27,7 +27,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            dicianni
             girola
       - run: ls -la
       - uses: actions/setup-python@v5 # equivalente di venv
