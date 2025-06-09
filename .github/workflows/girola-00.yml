@@ -28,11 +28,18 @@ jobs:
         with:
           sparse-checkout: |
             dicianni
+            girola
       - run: ls -la
       - uses: actions/setup-python@v5 # equivalente di venv
         with:
-          python-version: '3.11.9'
+          python-version: '3.11.13'
       - run: python --version
-      - run: python Smart_Farming_Crop_Yield_2024.csv 
-      - run: python Addestramento_ml.py
+      - run: pip install -r requirements.txt
         working-directory: girola
+      - run: pip install joblib
+      - run: python addestramento_ml.py
+        working-directory: girola
+      - uses: actions/upload-artifact@v4
+        with: 
+          name: best_artifact
+          path: girola/log_reg.joblib
